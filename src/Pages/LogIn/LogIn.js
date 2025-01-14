@@ -23,7 +23,7 @@ const LogIn = () => {
         }
 
         try {
-            const response = await axios.post('/api/users/login', {
+            const response = await axios.post('https://keylume-backend.onrender.com/login', {
                 email,
                 password,
                 captcha, // Send CAPTCHA response

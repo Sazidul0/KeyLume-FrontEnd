@@ -25,7 +25,7 @@ const SignUp = () => {
 
         try {
             // Send userType as 'free' (no need for user input)
-            await axios.post('/api/users/register', {
+            await axios.post('https://keylume-backend.onrender.com/register', {
                 username,
                 email,
                 password,
