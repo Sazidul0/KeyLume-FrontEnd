@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha'; // Import ReCAPTCHA
+import { useAuth } from '../Shared/AuthContext'; // Import the AuthContext
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
@@ -9,7 +10,8 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [captcha, setCaptcha] = useState(null); // Store CAPTCHA response
     const [error, setError] = useState('');
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Use useNavigate for redirection
+    const { login } = useAuth(); // Use the AuthContext
 
     const handleCaptchaChange = (value) => {
         setCaptcha(value); // Set CAPTCHA response value
@@ -25,15 +27,20 @@ const SignUp = () => {
 
         try {
             // Send userType as 'free' (no need for user input)
-            await axios.post('https://keylume-backend.onrender.com/register', {
+            const response = await axios.post('https://keylume-backend.onrender.com/api/users/register', {
                 username,
                 email,
                 password,
                 userType: 'free', // Default to 'free'
                 captcha, // Send CAPTCHA response
             });
-            navigate('/login'); // Redirect to login page after successful signup
+
+            // Store the token in localStorage
+            localStorage.setItem('token', response.data.token);
+            login(); // Call login from context to update the state
+            navigate('/managePass'); // Redirect to dashboard after successful signup
         } catch (err) {
+            console.error(err); // Log the error to the console
             setError(err.response?.data?.message || 'An error occurred');
         }
     };
@@ -88,7 +95,7 @@ const SignUp = () => {
                     {/* CAPTCHA Integration */}
                     <div className="form-control w-full mb-4">
                         <ReCAPTCHA
-                            sitekey="6LcrCrcqAAAAABF9pExJMAC0bxueo_B7fRbeQQNA" // Replace with your reCAPTCHA site key
+                            sitekey="6LcTNLcqAAAAAOMFu1A9LsaS2cAxNgLoYByWQfK6" // Replace with your reCAPTCHA site key
                             onChange={handleCaptchaChange}
                         />
                     </div>

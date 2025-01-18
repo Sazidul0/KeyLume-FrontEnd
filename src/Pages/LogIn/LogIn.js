@@ -1,7 +1,9 @@
+// src/Pages/Auth/LogIn.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha'; // Import ReCAPTCHA
+import { useAuth } from '../Shared/AuthContext'; // Import the AuthContext
 
 const LogIn = () => {
     const [email, setEmail] = useState('');
@@ -9,6 +11,7 @@ const LogIn = () => {
     const [captcha, setCaptcha] = useState(null); // Store CAPTCHA response
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { login } = useAuth(); // Use the AuthContext
 
     const handleCaptchaChange = (value) => {
         setCaptcha(value); // Set CAPTCHA response value
@@ -23,7 +26,7 @@ const LogIn = () => {
         }
 
         try {
-            const response = await axios.post('https://keylume-backend.onrender.com/login', {
+            const response = await axios.post('https://keylume-backend.onrender.com/api/users/login', {
                 email,
                 password,
                 captcha, // Send CAPTCHA response
@@ -31,8 +34,8 @@ const LogIn = () => {
 
             // Store the token in localStorage
             localStorage.setItem('token', response.data.token);
-
-            navigate('/dashboard'); // Redirect to dashboard after successful login
+            login(); // Call login from context
+            navigate('/managePass'); // Redirect to dashboard after successful login
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
         }
@@ -74,7 +77,7 @@ const LogIn = () => {
                     {/* CAPTCHA Integration */}
                     <div className="form-control w-full mb-4">
                         <ReCAPTCHA
-                            sitekey="6LcrCrcqAAAAABF9pExJMAC0bxueo_B7fRbeQQNA" // Replace with your reCAPTCHA site key
+                            sitekey="6LcTNLcqAAAAAOMFu1A9LsaS2cAxNgLoYByWQfK6" // Replace with your reCAPTCHA site key
                             onChange={handleCaptchaChange}
                         />
                     </div>
