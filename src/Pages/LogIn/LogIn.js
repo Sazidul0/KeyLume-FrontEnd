@@ -1,15 +1,16 @@
-// src/Pages/Auth/LogIn.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha'; // Import ReCAPTCHA
 import { useAuth } from '../Shared/AuthContext'; // Import the AuthContext
+import { ClipLoader } from 'react-spinners'; // Import the spinner from react-spinners
 
 const LogIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [captcha, setCaptcha] = useState(null); // Store CAPTCHA response
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state
     const navigate = useNavigate();
     const { login } = useAuth(); // Use the AuthContext
 
@@ -25,6 +26,9 @@ const LogIn = () => {
             return;
         }
 
+        setLoading(true); // Set loading to true when the login process starts
+        setError(''); // Clear any previous errors
+
         try {
             const response = await axios.post('https://keylume-backend.onrender.com/api/users/login', {
                 email,
@@ -38,6 +42,8 @@ const LogIn = () => {
             navigate('/managePass'); // Redirect to dashboard after successful login
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid email or password');
+        } finally {
+            setLoading(false); // Set loading to false after the request is completed
         }
     };
 
@@ -84,9 +90,16 @@ const LogIn = () => {
 
                     {error && <p className="text-red-500 mb-4">{error}</p>}
 
-                    <button type="submit" className="btn w-full bg-blue-500 text-white">
-                        Login
-                    </button>
+                    {/* Show the spinner if loading is true */}
+                    {loading ? (
+                        <div className="flex justify-center mb-4">
+                            <ClipLoader color="#3498db" loading={loading} size={30} />
+                        </div>
+                    ) : (
+                        <button type="submit" className="btn w-full bg-blue-500 text-white">
+                            Login
+                        </button>
+                    )}
                 </form>
 
                 <p className="text-center mt-4">

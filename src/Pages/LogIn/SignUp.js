@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReCAPTCHA from 'react-google-recaptcha'; // Import ReCAPTCHA
 import { useAuth } from '../Shared/AuthContext'; // Import the AuthContext
+import { ClipLoader } from 'react-spinners'; // Import the spinner from react-spinners
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
@@ -10,6 +11,7 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [captcha, setCaptcha] = useState(null); // Store CAPTCHA response
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false); // Loading state
     const navigate = useNavigate(); // Use useNavigate for redirection
     const { login } = useAuth(); // Use the AuthContext
 
@@ -24,6 +26,9 @@ const SignUp = () => {
             setError('Please complete the CAPTCHA');
             return;
         }
+
+        setLoading(true); // Set loading to true when the signup process starts
+        setError(''); // Clear any previous errors
 
         try {
             // Send userType as 'free' (no need for user input)
@@ -42,6 +47,8 @@ const SignUp = () => {
         } catch (err) {
             console.error(err); // Log the error to the console
             setError(err.response?.data?.message || 'An error occurred');
+        } finally {
+            setLoading(false); // Set loading to false after the request is completed
         }
     };
 
@@ -102,9 +109,16 @@ const SignUp = () => {
 
                     {error && <p className="text-red-500 mb-4">{error}</p>}
 
-                    <button type="submit" className="btn w-full bg-blue-500 text-white">
-                        Sign Up
-                    </button>
+                    {/* Show the spinner if loading is true */}
+                    {loading ? (
+                        <div className="flex justify-center mb-4">
+                            <ClipLoader color="#3498db" loading={loading} size={30} />
+                        </div>
+                    ) : (
+                        <button type="submit" className="btn w-full bg-blue-500 text-white">
+                            Sign Up
+                        </button>
+                    )}
                 </form>
 
                 <p className="text-center mt-4">
