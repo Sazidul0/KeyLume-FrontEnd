@@ -61,7 +61,7 @@ const About = () => {
             animate={{ x: 0 }}
             initial={{ x: -100 }}
         >
-            <h2 className='protfolio-heading mt-10 flex justify-center'>Web Developer | App Developer | Cyber Security Specialist</h2>
+            <h2 className='protfolio-heading mt-10 flex justify-center'>Web Developer | App Developer | Cyber Security Enthusiast</h2>
             <div className='body-container'>
                 <p className='flex justify-center'>I design and code beautifully simple things, and I love what I do.</p>
                 <div className="card w-48  mx-auto my-10">
@@ -105,9 +105,9 @@ const About = () => {
                                 <Card
                                     title="Mobile App Developer"
                                     description="I build beautiful and functional mobile applications using Flutter."
-                                    languages="Dart, Java, Swift"
+                                    languages="Dart, Java"
                                     tools="Flutter, Firebase, REST APIs"
-                                    contact="your_email@example.com"
+                                    contact="sazidulislam.mail@gmail.com"
                                     imgSrc={mobileDev}
                                 />
                             </div>
@@ -117,7 +117,7 @@ const About = () => {
                                     description="I ensure the security of systems and networks using various tools."
                                     languages="Python, Bash, JavaScript"
                                     tools="Wazuh, Metasploit, Nmap, Burp Suite"
-                                    contact="your_email@example.com"
+                                    contact="sazidulislam.mail@gmail.com"
                                     imgSrc={cyberSecurityImg}
                                 />
                             </div>
