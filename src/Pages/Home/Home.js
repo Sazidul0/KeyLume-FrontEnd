@@ -28,7 +28,7 @@ const Home = () => {
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <img
                         src={stpass}
-                        className="max-w-sm rounded-lg shadow-2xl" />
+                        className="w-full h-auto max-w-sm rounded-lg shadow-2xl" />
                     <div>
                         <h1 className="text-5xl font-bold">Password Strength Check!</h1>
                         <p className="py-6">
@@ -40,11 +40,11 @@ const Home = () => {
             </div>
 
 
-            <div className="flex justify-center bg-base-200 pb-28">
-                <div className="hero-content flex-col lg:flex-row">
+            <div className="hero bg-base-200 min-h-screen">
+                <div className="hero-content flex-col lg:flex-row ">
                     <img
                         src={brpass}
-                        className="max-w-sm rounded-lg shadow-2xl" />
+                        className="w-full h-auto max-w-sm rounded-lg shadow-2xl" />
                     <div>
                         <h1 className="text-5xl font-bold">Password Breach Check!</h1>
                         <p className="py-6">
