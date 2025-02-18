@@ -27,14 +27,17 @@
 ```bash
     git clone https://github.com/Sazidul0/KeyLume-FrontEnd.git
     cd KeyLume
+```
 
 ### 2️⃣ Install Dependencies
 ```bash
     npm install
+```
 
 ### 4️⃣ Run the Application
 ```bash
 npm start
+```
 
 The app will be available at http://localhost:3000.
 
